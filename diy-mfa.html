@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" class=""> <!-- The 'dark' class will be added here by JavaScript -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY MFA Program - AI Writers' Retreat</title>
+    
+    <!-- This script adds Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- These are our special fonts from Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@400;700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- This is our custom configuration for Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // This enables dark mode based on a class
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#1E2A38',
+                        glow: '#7B70FF',
+                        mint: '#2BD9B2',
+                        coral: '#FF6977',
+                        canvas: '#FDFCFB',
+                        canvasDark: '#121417',
+                    },
+                    fontFamily: {
+                        display: ['Montserrat', 'sans-serif'],
+                        body: ['Merriweather', 'serif'],
+                        ui: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* A little extra style to make things look just right */
+        .font-display { font-family: 'Montserrat', sans-serif; }
+        .font-body { font-family: 'Merriweather', serif; }
+        .font-ui { font-family: 'Inter', sans-serif; }
+        /* Style for dark mode icons to make them visible */
+        .dark .social-icon {
+            filter: invert(1);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-ui bg-canvas text-ink dark:bg-canvasDark dark:text-canvas transition-colors duration-300">
+
+    <!-- A hidden link for people using screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:p-3 focus:bg-white focus:text-black focus:ring-2 focus:ring-glow">
+        Skip to main content
+    </a>
+
+    <!-- HEADER: This is the top bar with the logo and menu -->
+    <header class="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-800 bg-canvas/80 dark:bg-canvasDark/80 backdrop-blur-sm">
+        <div class="container mx-auto flex h-24 items-center justify-between px-4">
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Menu Button (Hamburger Icon) - now on the left -->
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                    <span class="sr-only">Open main menu</span>
+                </button>
+                <!-- Your Logo -->
+                <a href="./index.html" class="flex items-center">
+                    <img src="./public/Logo.png" alt="AI Writers Retreat Logo" class="h-16 w-auto">
+                </a>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <!-- Desktop Menu (hidden on small screens) -->
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="./index.html" class="text-ink/60 dark:text-canvas/60 hover:text-ink dark:hover:text-canvas">Home</a>
+                    <a href="./about.html" class="text-ink/60 dark:text-canvas/60 hover:text-ink dark:hover:text-canvas">About</a>
+                    <a href="./diy-mfa.html" class="text-ink dark:text-canvas font-bold">DIY MFA</a>
+                    <a href="#" class="text-ink/60 dark:text-canvas/60 hover:text-ink dark:hover:text-canvas">Community</a>
+                    
+                    <!-- "More" Dropdown Menu -->
+                    <div class="relative" id="more-menu-container">
+                        <button id="more-menu-button" class="flex items-center space-x-1 text-ink/60 dark:text-canvas/60 hover:text-ink dark:hover:text-canvas">
+                            <span>More</span>
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
+                        <div id="more-menu-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-canvas dark:bg-canvasDark border border-gray-200 dark:border-gray-700 rounded-md shadow-lg py-1 z-50">
+                            <a href="#" class="block px-4 py-2 text-sm text-ink dark:text-canvas hover:bg-gray-100 dark:hover:bg-gray-800">AI Basics</a>
+                            <a href="./reading-list.html" class="block px-4 py-2 text-sm text-ink dark:text-canvas hover:bg-gray-100 dark:hover:bg-gray-800">Read</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-ink dark:text-canvas hover:bg-gray-100 dark:hover:bg-gray-800">Revise</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-ink dark:text-canvas hover:bg-gray-100 dark:hover:bg-gray-800">Publish</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-ink dark:text-canvas hover:bg-gray-100 dark:hover:bg-gray-800">Free AI Tools</a>
+                        </div>
+                    </div>
+                    
+                    <a href="https://coff.ee/aiwritersretreat" target="_blank" rel="noopener noreferrer" class="text-ink/60 dark:text-canvas/60 hover:text-ink dark:hover:text-canvas">Donate</a>
+                </nav>
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="theme-toggle" type="button" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Toggle dark mode</span>
+                </button>
+                
+                <!-- Search Bar -->
+                <div id="search-container" class="relative">
+                    <button id="search-toggle-button" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                        <span class="sr-only">Toggle Search</span>
+                    </button>
+                    <input type="search" id="search-input" placeholder="Search..." class="hidden absolute right-0 top-12 md:top-auto md:right-10 w-64 p-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-canvas dark:bg-canvasDark focus:ring-glow focus:border-glow">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-canvas dark:bg-canvasDark">
+            <nav class="px-2 pt-2 pb-4 space-y-1">
+                <a href="./index.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
+                <a href="./about.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">AI Basics</a>
+                <a href="./diy-mfa.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">DIY MFA</a>
+                <a href="./reading-list.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Read</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Revise</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Publish</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Free AI Tools</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Community</a>
+                <a href="https://coff.ee/aiwritersretreat" target="_blank" rel="noopener noreferrer" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Donate</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="container mx-auto px-4 py-12 md:py-16">
+        
+        <div class="max-w-4xl mx-auto">
+            <!-- Introduction Section -->
+            <section class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight font-display md:text-5xl lg:text-6xl">
+                    The DIY MFA in Writing
+                </h1>
+                <div class="mt-6 max-w-3xl mx-auto space-y-4 font-body text-lg leading-relaxed text-ink/90 dark:text-canvas/90">
+                    <p>You are here because the work itself is the point. You understand that a writing career is not a passive endeavor but an active craft—one that must be built. This program is designed for the self-motivated writer who seeks the rigor and structure of a Master of Fine Arts program without the demanding, expensive, and often inaccessible institutional framework.</p>
+                </div>
+            </section>
+
+            <!-- Guiding Principles Section -->
+            <section class="mt-16">
+                <h2 class="text-3xl font-bold font-display text-center mb-8">Our Guiding Principles</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-body text-ink/80 dark:text-canvas/80">
+                    <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                        <h3 class="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Craft Before Commerce</h3>
+                        <p>The habits of a professional writer—querying, platform-building, and audience engagement—are vital, but they are secondary. This program helps you write with power, precision, and originality.</p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                        <h3 class="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Active, Not Passive</h3>
+                        <p>This program is designed for an immense self-direction. The program provides the guardrails; you provide the engine. The work is about the writing itself. The lessons, deadlines, and assessments are the scaffolding that allows you to build your own unique body of work.</p>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Program Structure Section -->
+            <section class="mt-16">
+                <h2 class="text-3xl font-bold font-display text-center mb-8">Program Structure: A Two-Year Journey</h2>
+                <div class="space-y-6 font-body text-ink/80 dark:text-canvas/80">
+                    <div>
+                        <h3 class="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 1: Craft Fundamentals & Portfolio Building</h3>
+                        <p>We begin with the essentials. You will establish a durable writing practice and begin a deep dive into the foundational elements of narrative craft. This semester is about building a strong foundation for your future work.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 2: Genre Focus & Experimentation</h3>
+                        <p>With the fundamentals in place, you will begin to explore genre and reader expectations. Through a series of focused deep dives and lessons, you will experiment with advanced craft techniques and begin developing the extended work that will become your thesis.</p>
+                    </div>
+                     <div>
+                        <h3 class="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 3: Advanced Topics & Thesis Development</h3>
+                        <p>This semester is dedicated to your thesis—the novel-length manuscript at the core of this program. You will gain a clear understanding of the publishing landscape while formally outlining and beginning to draft your thesis manuscript.</p>
+                    </div>
+                     <div>
+                        <h3 class="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 4: Thesis Completion & Professional Preparation</h3>
+                        <p>The final semester is focused on a single outcome: a completed, deeply revised thesis. Alongside this intensive work, you will prepare for a professional writing life by mastering the query letter, synopsis, and other essential submission materials.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Course Offerings Section -->
+            <section class="mt-16">
+                <h2 class="text-3xl font-bold font-display text-center mb-8">Course Offerings</h2>
+                <div id="curriculum-accordion" class="space-y-4">
+                    <!-- Accordion items will be inserted here by JavaScript -->
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-8 items-center md:items-start text-center md:text-left">
+                <!-- Column 1: Contact -->
+                <div class="flex flex-col items-center md:items-start">
+                     <a id="contact-email" href="#" class="inline-flex items-center space-x-2 bg-gray-200 dark:bg-gray-700 text-ink dark:text-canvas font-bold font-ui py-2 px-4 rounded-lg text-sm hover:opacity-90 transition-opacity">
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+
+                <!-- Column 2: Follow Us -->
+                <div class="flex flex-col items-center space-y-4">
+                    <h3 class="font-bold font-display text-sm uppercase tracking-wider text-ink/60 dark:text-canvas/60">Follow Us</h3>
+                    <div class="flex space-x-6">
+                        <a href="https://x.com/aiwriterretreat" target="_blank" rel="noopener noreferrer" class="opacity-70 hover:opacity-100 transition-opacity">
+                            <img src="./public/X.png" alt="X logo" class="h-6 w-6 social-icon">
+                            <span class="sr-only">X</span>
+                        </a>
+                        <a href="http://tiktok.com/@aiwritersretreat" target="_blank" rel="noopener noreferrer" class="opacity-70 hover:opacity-100 transition-opacity">
+                            <img src="./public/tiktok.png" alt="TikTok logo" class="h-6 w-6 social-icon">
+                            <span class="sr-only">TikTok</span>
+                        </a>
+                        <a href="http://www.instagram.com/aiwritersretreat" target="_blank" rel="noopener noreferrer" class="opacity-70 hover:opacity-100 transition-opacity">
+                            <img src="./public/Instagram.png" alt="Instagram logo" class="h-6 w-6 social-icon">
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="opacity-70 hover:opacity-100 transition-opacity">
+                            <img src="./public/facebook.png" alt="Facebook logo" class="h-6 w-6 social-icon">
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 3: Donate -->
+                <div class="flex flex-col items-center md:items-end">
+                    <a href="https://coff.ee/aiwritersretreat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-glow text-ink font-bold font-ui py-2 px-4 rounded-lg text-sm hover:opacity-90 transition-opacity">
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5h3m-6.75-6.75h9.5c.621 0 1.125-.504 1.125-1.125v-6c0-.621-.504-1.125-1.125-1.125h-9.5c-.621 0-1.125.504-1.125 1.125v6c0 .621.504 1.125 1.125 1.125z" /><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 12.75v6.75c0 .621-.504 1.125-1.125 1.125H7.875c-.621 0-1.125-.504-1.125-1.125V12.75" /></svg>
+                        <span>Buy Me a Coffee</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-xs text-ink/60 dark:text-canvas/60">
+                <p>&copy; 2025 AI Writers' Retreat. All Rights Reserved.</p>
+                <p class="mt-1">This is an independent project. The content and tools on this site are for your personal learning and use.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for the menus and dark mode -->
+    <script>
+        // --- DATA FOR THE CURRICULUM ---
+        const curriculum = {
+            "Year 1: Foundations & Portfolio Building": {
+                "Semester 1: Craft Fundamentals": [
+                    "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
+                    "Lesson 2: The Engine of Story: Goal, Motivation, and Conflict",
+                    "Lesson 3: Finding the Filter: Crafting a Powerful Narrative Voice",
+                    "Lesson 4: The Living World: Mastering Setting and Scene Construction",
+                    "Lesson 5: Weaving the Fabric: Transitions, Subplots, and Narrative Momentum",
+                    "Lesson 6: The Soul of the Story: Crafting Purposeful Dialogue and Subtext",
+                    "Lesson 7: The Blueprint of Story: Introduction to the Three-Act Structure",
+                    "Lesson 8: The Point of No Return: Mastering the First Act",
+                    "Lesson 9: The Long Middle: Rising Action and the Midpoint",
+                    "Lesson 10: The Art of Revision I: Macro-Edits and Re-Visioning",
+                    "Lesson 11: The Art of Revision II: Micro-Edits and Line-Level Polish",
+                    "Lesson 12: Semester 1 Portfolio: Assembling and Assessing Your Foundational Work"
+                ],
+                "Semester 2: Genre Focus & Experimentation": [
+                    "Lesson 13: Choosing Your Lane: Genre, Audience, and Reader Expectations",
+                    "Lesson 14: Genre Deep Dive I: Literary & Commercial Fiction",
+                    "Lesson 15: Genre Deep Dive II: Science Fiction, Fantasy & Speculative Fiction",
+                    "Lesson 16: Genre Deep Dive III: Mystery, Thriller & Horror",
+                    "Lesson 17: Advanced Pacing: Mastering Tension and Release",
+                    "Lesson 18: Manipulating Time: The Strategic Use of Flashback and Foreshadowing",
+                    "Lesson 19: The Power of the Image: Symbolism and Motif",
+                    "Lesson 20: From Scene to Chapter: Weaving Scenes into Larger Units",
+                    "Lesson 21: The Synopsis: Outlining Your Novel-Length Project",
+                    "Lesson 22: Giving and Receiving Feedback: The Art of the Critique",
+                    "Lesson 23: Workshop I: Critiquing Your First 15 Pages",
+                    "Lesson 24: Semester 2 Portfolio & Mid-Program Evaluation"
+                ]
+            },
+            "Year 2: Advanced Craft & Professional Development": {
+                "Semester 3: Advanced Topics & Thesis Development": [
+                    "Lesson 25: Beyond the Straight Line: An Introduction to Non-Linear Narratives",
+                    "Lesson 26: The Ensemble Cast: Managing Multiple Points of View",
+                    "Lesson 27: The Tragic Form: Understanding Freytag's Pyramid and Negative Arcs",
+                    "Lesson 28: The Hero's Journey: Deconstructing the Monomyth",
+                    "Lesson 29: Discovering Your Theme: From Premise to Controlling Idea",
+                    "Lesson 30: Weaving Theme into Plot: Thematic Resonance and Unity",
+                    "Lesson 31: The Publishing Landscape: Traditional, Independent, and Hybrid Paths",
+                    "Lesson 32: The Role of the Agent: Who They Are and What They Do",
+                    "Lesson 33: The Editor's Desk: Understanding the Acquisition Process",
+                    "Lesson 34: The Thesis Proposal: Creating Your Project Blueprint",
+                    "Lesson 35: Research for Writers: World-Building and Factual Accuracy",
+                    "Lesson 36: Thesis Drafting I: Writing the First 50 Pages",
+                    "Lesson 37: Thesis Drafting II: Overcoming the 'Muddled Middle'",
+                    "Lesson 38: Thesis Drafting III: Writing Toward the Climax",
+                    "Lesson 39: Semester 3 Check-In: Evaluating Thesis Progress"
+                ],
+                "Semester 4: Thesis Completion & Professional Prep": [
+                    "Lesson 40: The 'Seek and Destroy' Pass: Eliminating Clichés and Filler Words",
+                    "Lesson 41: The 'Read Aloud' Pass: Polishing for Rhythm and Cadence",
+                    "Lesson 42: Working with a Critique Partner for a Full Manuscript Read",
+                    "Lesson 43: The Query Letter: A Masterclass in Pitching Your Book",
+                    "Lesson 44: The Synopsis and Author Bio: Crafting Your Submission Package",
+                    "Lesson 45: Building a Writer's Platform: Website, Social Media, and Newsletter Essentials",
+                    "Lesson 46: Navigating Rejection and Building Resilience",
+                    "Lesson 47: Understanding Publishing Contracts and Rights",
+                    "Lesson 48: Workshop II: Critiquing Your Final 50 Pages",
+                    "Lesson 49: The Final Polish: From Full Manuscript Read to Proofreading",
+                    "Lesson 50: Formatting Your Manuscript for Submission",
+                    "Lesson 51: Creating Your Submission Strategy: Researching Agents and Presses",
+                    "Lesson 52: The First Ten Submissions: Sending Your Work Out",
+                    "Lesson 53: The Writing Life: Balancing Art, Commerce, and Mental Health",
+                    "Lesson 54: Finding Your Literary Community",
+                    "Lesson 55: From One Project to the Next: How to Keep Writing",
+                    "Lesson 56: Financial Planning for Writers: Diversifying Income Streams",
+                    "Lesson 57: The Art of the Public Reading",
+                    "Lesson 58: Teaching and Mentoring: Paying It Forward",
+                    "Lesson 59: Final Portfolio & Thesis Submission",
+                    "Lesson 60: The Writer's Pact, Revisited: Your Path Forward"
+                ]
+            }
+        };
+
+        // --- DYNAMIC PAGE LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionContainer = document.getElementById('curriculum-accordion');
+            let lessonCounter = 1;
+
+            for (const yearTitle in curriculum) {
+                const yearData = curriculum[yearTitle];
+                for (const semesterTitle in yearData) {
+                    const lessons = yearData[semesterTitle];
+                    
+                    const accordionItem = document.createElement('div');
+                    accordionItem.className = 'border border-gray-200 dark:border-gray-800 rounded-lg';
+
+                    const button = document.createElement('button');
+                    button.className = 'accordion-button w-full flex justify-between items-center text-left p-4 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800';
+                    button.innerHTML = `
+                        <div>
+                            <h3 class="font-bold font-display text-lg text-ink dark:text-canvas">${yearTitle}</h3>
+                            <p class="text-sm text-ink/80 dark:text-canvas/80">${semesterTitle}</p>
+                        </div>
+                        <svg class="w-5 h-5 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                    `;
+
+                    const content = document.createElement('div');
+                    content.className = 'accordion-content p-4';
+                    
+                    const lessonList = document.createElement('ul');
+                    lessonList.className = 'space-y-3';
+                    lessons.forEach(lesson => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a href="./lesson-${lessonCounter}.html" class="flex items-center space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow"><span class="font-bold text-ink/60 dark:text-canvas/60 w-8 text-right">${lessonCounter}.</span><span>${lesson.split(': ')[1]}</span></a>`;
+                        lessonList.appendChild(li);
+                        lessonCounter++;
+                    });
+                    
+                    content.appendChild(lessonList);
+                    accordionItem.appendChild(button);
+                    accordionItem.appendChild(content);
+                    accordionContainer.appendChild(accordionItem);
+                }
+            }
+
+            // Accordion functionality
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('svg');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+
+        // --- STANDARD SITE-WIDE LOGIC ---
+        
+        // Mobile Menu Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Dark Mode Logic
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleButton = document.getElementById('theme-toggle');
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+                localStorage.setItem('color-theme', 'light');
+            }
+        }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+        themeToggleButton.addEventListener('click', () => {
+            setTheme(!document.documentElement.classList.contains('dark'));
+        });
+        
+        // Search Bar Logic
+        const searchToggleButton = document.getElementById('search-toggle-button');
+        const searchInput = document.getElementById('search-input');
+        searchToggleButton.addEventListener('click', (event) => {
+            searchInput.classList.toggle('hidden');
+            if (!searchInput.classList.contains('hidden')) {
+                searchInput.focus();
+            }
+            event.stopPropagation();
+        });
+        document.addEventListener('click', (event) => {
+            const searchContainer = document.getElementById('search-container');
+            if (searchContainer && !searchContainer.contains(event.target) && !searchInput.classList.contains('hidden')) {
+                searchInput.classList.add('hidden');
+            }
+        });
+
+        // Dynamic Email Logic
+        const emailUser = 'message';
+        const emailDomain = 'aiwritersretreat.com';
+        const emailElement = document.getElementById('contact-email');
+        if(emailElement) {
+            emailElement.setAttribute('href', `mailto:${emailUser}@${emailDomain}`);
+        }
+        
+        // "More" Menu Dropdown Logic
+        const moreMenuContainer = document.getElementById('more-menu-container');
+        const moreMenuButton = document.getElementById('more-menu-button');
+        const moreMenuDropdown = document.getElementById('more-menu-dropdown');
+
+        if (moreMenuButton) {
+            moreMenuButton.addEventListener('click', (event) => {
+                moreMenuDropdown.classList.toggle('hidden');
+                event.stopPropagation();
+            });
+        }
+
+        document.addEventListener('click', (event) => {
+            if (moreMenuContainer && !moreMenuContainer.contains(event.target) && !moreMenuDropdown.classList.contains('hidden')) {
+                moreMenuDropdown.classList.add('hidden');
+            }
+        });
+
+    </script>
+</body>
+</html>
