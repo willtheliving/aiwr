@@ -3,17 +3,18 @@
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-/** 
- * Wraps the application with next‑themes.
- * We keep typing minimal so we never trip the compiler.
+/**
+ * Simple wrapper around next‑themes’ ThemeProvider.
+ * We **do not** import ThemeProviderProps – that avoids the compile error.
  */
-interface ProviderProps {
+export function ThemeProvider({
+  children,
+  ...props
+}: {
   children: React.ReactNode;
   attribute?: "class" | "data-theme";
   defaultTheme?: string;
   enableSystem?: boolean;
-}
-
-export function ThemeProvider({ children, ...props }: ProviderProps) {
+}) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
