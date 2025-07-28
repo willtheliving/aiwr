@@ -1,15 +1,19 @@
 "use client";
 
 import * as React from "react";
-
-/* --- FIXED IMPORTS --- */
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import type { ThemeProviderProps } from "next-themes"; // separate `import type`
 
-/**
- * Wraps the application with the `next‑themes` provider.
- * All props (attribute="class" etc.) are passed straight through.
+/** 
+ * Wraps the application with next‑themes.
+ * We keep typing minimal so we never trip the compiler.
  */
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+interface ProviderProps {
+  children: React.ReactNode;
+  attribute?: "class" | "data-theme";
+  defaultTheme?: string;
+  enableSystem?: boolean;
+}
+
+export function ThemeProvider({ children, ...props }: ProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
