@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat, Merriweather } from "next/font/google";
+// ✅ CORRECT IMPORT PATH
+import { Inter, Montserrat, Merriweather } from 'next/font/google';
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-// Initialize fonts with correct syntax
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
