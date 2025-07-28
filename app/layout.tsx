@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-// Setup the fonts directly in the layout
+// Initialize fonts with correct syntax
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
