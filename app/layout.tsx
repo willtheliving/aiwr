@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat, Merriweather } from "next/font/google";
-import { cn } from "@/lib/utils"; // We will create this file soon
-import Header from "@/components/Header"; // We will create this component soon
-import Footer from "@/components/Footer"; // We will create this component soon
-import { ThemeProvider } from "@/components/ThemeProvider"; // We will create this soon
+import { cn } from "@/lib/utils";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import "./globals.css";
 
-// Setup the fonts
+// Setup the fonts directly in the layout
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -44,7 +45,6 @@ export default function RootLayout({
         merriweather.variable
       )}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* Skip Link for accessibility */}
           <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:p-3 bg-canvas dark:bg-canvasDark focus:ring-2 focus:ring-glow">
             Skip to main content
           </a>
