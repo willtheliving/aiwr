@@ -1,19 +1,14 @@
 "use client";
 
 import * as React from "react";
-import {
-  ThemeProvider as NextThemesProvider,
-  type ThemeProviderProps,
-} from "next-themes";
+
+/* --- FIXED IMPORTS --- */
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import type { ThemeProviderProps } from "next-themes"; // separate `import type`
 
 /**
- * Wraps the application with a theme provider from `next-themes`.
- *
- * Separating this into its own component makes it easy to provide
- * sensible defaults (like enabling system preference) without
- * repeating the provider boilerplate in every file. The `props`
- * argument is spread onto the underlying provider allowing callers to
- * override behaviour if necessary.
+ * Wraps the application with the `next‑themes` provider.
+ * All props (attribute="class" etc.) are passed straight through.
  */
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
