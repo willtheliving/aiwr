@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 
 // This component will be the sidebar, dynamically listing all lessons
 function LessonSidebar({ currentSlug }: { currentSlug: string }) {
-    // We'll use the curriculum data structure for the sidebar
     const curriculum = {
         "Year 1: Foundations & Portfolio Building": {
             "Semester 1: Craft Fundamentals": [
@@ -31,7 +30,7 @@ function LessonSidebar({ currentSlug }: { currentSlug: string }) {
                                         <li key={lesson.id}>
                                             <Link 
                                                 href={`/lessons/${lesson.id}`}
-                                                className={`block border-l-2 pl-4 py-1 text-sm transition-colors ${
+                                                className={`block border-l-2 pl-4 py-1 text-sm transition-colors rounded-r-md focus-ring ${
                                                     isActive 
                                                     ? 'border-glow text-ink dark:text-canvas font-bold' 
                                                     : 'border-transparent text-ink/80 dark:text-canvas/80 hover:border-glow hover:text-ink dark:hover:text-canvas'
@@ -54,10 +53,8 @@ function LessonSidebar({ currentSlug }: { currentSlug: string }) {
 
 // This is the main page component
 export default function LessonPage({ params }: { params: { slug: string } }) {
-    // Find the lesson that matches the slug from the URL
     const lesson = lessons.find(p => p.slug === params.slug);
 
-    // If no lesson is found, show a 404 page
     if (!lesson) {
         notFound();
     }
@@ -68,25 +65,21 @@ export default function LessonPage({ params }: { params: { slug: string } }) {
                 
                 <LessonSidebar currentSlug={params.slug} />
 
-                {/* Main Lesson Content */}
                 <div className="w-full lg:w-3/4">
-                    {/* Header Block */}
                     <header className="mb-10 pb-6 border-b border-gray-200 dark:border-gray-800">
                         <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl">
                             {lesson.title}
                         </h1>
-                        <div className="mt-4 text-sm text-ink/70 dark:text-canvas/70 space-y-1">
-                            <p><strong>Program:</strong> {lesson.meta.program}</p>
-                            <p><strong>Position:</strong> {lesson.meta.position}</p>
-                            <p><strong>Estimated Time Commitment:</strong> {lesson.meta.time}</p>
-                            <p><strong>Prerequisites:</strong> {lesson.meta.prerequisites}</p>
-                        </div>
+                        {lesson.meta && (
+                            <div className="mt-4 text-sm text-ink/70 dark:text-canvas/70 space-y-1">
+                                <p><strong>Program:</strong> {lesson.meta.program}</p>
+                                <p><strong>Position:</strong> {lesson.meta.position}</p>
+                                <p><strong>Estimated Time Commitment:</strong> {lesson.meta.time}</p>
+                                <p><strong>Prerequisites:</strong> {lesson.meta.prerequisites}</p>
+                            </div>
+                        )}
                     </header>
 
-                    {/* This is where the lesson's HTML content is rendered.
-                      `dangerouslySetInnerHTML` is React's way of rendering HTML from a string.
-                      It's safe here because we are the ones writing the HTML content in our lessons.ts file.
-                    */}
                     <article 
                         className="space-y-12 font-body text-lg leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: lesson.content }} 
@@ -96,3 +89,4 @@ export default function LessonPage({ params }: { params: { slug: string } }) {
         </div>
     );
 }
+
