@@ -51,8 +51,7 @@ export default function HomePage() {
           alt="A writer looking out a window with a mug, inspired."
           fill
           priority
-          // The 'brightness-50' class darkens the image for text readability,
-          // replacing the separate overlay div for cleaner code.
+          // The 'brightness-50' class darkens the image for text readability
           className="object-cover z-0 brightness-50"
         />
         <div className="relative z-20 container mx-auto flex flex-col items-center text-center px-4">
@@ -69,13 +68,13 @@ export default function HomePage() {
             grounding every lesson in the foundational principles of a Master of
             Fine Arts education—from building a compelling character arc to
             mastering narrative momentum. We are making the core of an MFA
-* accessible, helping you build an unshakeable foundation before you
+            accessible, helping you build an unshakeable foundation before you
             launch your voice into the future.
           </p>
         </div>
       </section>
 
-      {/* AI Tools Section (Original code untouched) */}
+      {/* AI Tools Section (Original code restored) */}
       <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="text-center">
@@ -118,7 +117,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Explore Section (Original code untouched) */}
+      {/* Explore Section (Original code restored) */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center font-display mb-12">
