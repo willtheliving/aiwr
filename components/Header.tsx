@@ -11,6 +11,7 @@ import { ThemeToggle } from "./ThemeToggle"; // Theme toggle control
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/ai-basics", label: "AI Basics" },
   { href: "/diy-mfa", label: "DIY MFA" },
   { href: "/reading-list", label: "Reading List" },
   // { href: "/community", label: "Community" }, // Example for later
@@ -40,7 +41,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center focus-ring rounded-md">
             {/* Make sure Logo.png is in a new /public folder at the root of your project */}
-            <Image src="/Logo.png" alt="AI Writers Retreat Logo" width={120} height={120} className="h-16 w-auto" />
+            <Image src="/Logo.png" alt="AI Writers Retreat Logo" width={90} height={90} className="h-16 w-auto" />
           </Link>
         </div>
 
