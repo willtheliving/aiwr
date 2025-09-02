@@ -1,7 +1,29 @@
-export const lessons = [
+// This file is the single source of truth for all lesson data.
+// To add a new lesson, simply add a new object to this array.
+
+export interface Lesson {
+  slug: string;
+  title: string;
+  year: number;
+  semester: number;
+  week: number;
+  meta: {
+    program: string;
+    position: string;
+    time: string;
+    prerequisites: string;
+  };
+  content: string;
+}
+
+export const lessons: Lesson[] = [
+  // SEMESTER 1
   {
     slug: "writers-pact",
     title: "The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
+    year: 1,
+    semester: 1,
+    week: 1,
     meta: {
       program: "The Writer's Apprenticeship: A Two-Year, Self-Paced MFA",
       position: "Year 1, Semester 1, Week 1",
@@ -180,16 +202,29 @@ export const lessons = [
   {
     slug: "engine-of-story",
     title: "The Engine of Story: Goal, Motivation, and Conflict",
+    year: 1,
+    semester: 1,
+    week: 2,
+    meta: { program: "", position: "", time: "", prerequisites: "" },
     content: "Content for this lesson is coming soon...",
   },
   {
     slug: "finding-the-filter",
     title: "Finding the Filter: Crafting a Powerful Narrative Voice",
+    year: 1,
+    semester: 1,
+    week: 3,
+    meta: { program: "", position: "", time: "", prerequisites: "" },
     content: "Content for this lesson is coming soon...",
   },
   {
     slug: "living-world",
     title: "The Living World: Mastering Setting and Scene Construction",
+    year: 1,
+    semester: 1,
+    week: 4,
+    meta: { program: "", position: "", time: "", prerequisites: "" },
     content: "Content for this lesson is coming soon...",
   },
+  // Add more lessons here...
 ];
