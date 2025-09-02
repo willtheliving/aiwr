@@ -1,27 +1,11 @@
-"use client";
-
-// import { notFound } from "next/navigation"; // Removed to fix compilation error
-// import Link from "next/link"; // Removed to fix compilation error
+// import Link from "next/link"; // Removed to fix compilation error in preview environment
+// import { notFound } from "next/navigation"; // Removed to fix compilation error in preview environment
+// import { lessons } from "@/lib/lessons"; // Removed to fix compilation error in preview environment
 
 // --- Data Duplication for Preview Environment ---
 // To resolve persistent import errors, the lesson data is temporarily duplicated here.
 // In a standard Next.js project, you would import this from a central 'lib/lessons.ts' file.
-interface Lesson {
-  slug: string;
-  title: string;
-  year: number;
-  semester: number;
-  week: number;
-  meta?: {
-    program: string;
-    position: string;
-    time: string;
-    prerequisites: string;
-  };
-  content: string;
-}
-
-const lessons: Lesson[] = [
+const lessons = [
     {
     slug: "writers-pact",
     title: "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
@@ -65,6 +49,12 @@ const lessons: Lesson[] = [
 ];
 // --- End Data Duplication ---
 
+// This function is for Next.js builds and may not work in all preview environments.
+// export async function generateStaticParams() {
+//   return lessons.map((lesson) => ({
+//     slug: lesson.slug,
+//   }));
+// }
 
 // Sidebar component
 function LessonSidebar({ currentSlug }: { currentSlug: string }) {
@@ -101,20 +91,15 @@ function LessonSidebar({ currentSlug }: { currentSlug: string }) {
   );
 }
 
-// The page component for a single lesson.
+// Main page component. This is the only default export.
 export default function LessonPage({ params }: { params?: { slug: string } }) {
-  // To make this component runnable in a preview environment that doesn't provide params,
-  // we default to the first lesson if params are missing.
+  // Default to the first lesson if params are not available in the preview environment
   const slug = params?.slug || 'writers-pact';
   const lesson = lessons.find((p) => p.slug === slug);
 
   if (!lesson) {
-    return (
-        <div className="container mx-auto px-4 py-12 md:py-16">
-            <h1 className="text-4xl font-extrabold">Lesson Not Found</h1>
-            <p className="mt-4">Sorry, we couldn't find the lesson you were looking for.</p>
-        </div>
-    );
+    // Return a simple message if the lesson isn't found
+    return <div className="p-8">Lesson not found.</div>;
   }
 
   return (
@@ -142,6 +127,8 @@ export default function LessonPage({ params }: { params?: { slug: string } }) {
     </div>
   );
 }
+
+
 
 
 
