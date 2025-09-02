@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-// import Link from "next/link"; // Removed to fix compilation error
+// import Link from "next/link"; // Removed to resolve compilation error
 import { ChevronDown } from "lucide-react";
+// import { lessons, Lesson } from "@/lib/lessons"; // Removed to resolve compilation error
 
 // --- Data Duplication for Preview Environment ---
 // To resolve persistent import errors, the lesson data is temporarily duplicated here.
