@@ -1,11 +1,8 @@
-"use client"; // This page has interactive accordions.
+// To resolve persistent import errors in this environment, the lesson data is temporarily duplicated here.
+// In a standard Next.js setup, this would import from a central 'lib/lessons.ts' file.
+// import Link from "next/link"; // Removed to fix compilation error
+// import { notFound } from "next/navigation"; // Removed to fix compilation error
 
-import { useState } from "react";
-// import Link from "next/link"; // Removed to fix compilation error in this environment
-import { ChevronDown } from "lucide-react";
-
-// To resolve the persistent import error, the lesson data has been moved directly into this file.
-// This is a temporary solution to ensure the page compiles correctly in the current environment.
 interface Lesson {
   slug: string;
   title: string;
@@ -22,7 +19,7 @@ interface Lesson {
 }
 
 const lessons: Lesson[] = [
-  {
+    {
     slug: "writers-pact",
     title: "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
     year: 1,
@@ -35,11 +32,18 @@ const lessons: Lesson[] = [
       prerequisites: "None",
     },
     content: `
-      <!-- The full HTML content for Lesson 1 goes here. -->
-      <!-- For brevity, it is represented by this comment. -->
-      <h2>The Myth of the Muse</h2>
-      <p>Let's begin by dismantling the most destructive myth in the creative arts: the myth of the muse...</p>
-      <!-- ... rest of the lesson content -->
+      <h2>1. Learning Objectives</h2>
+      <p>By the end of this lesson, you will be able to:</p>
+      <ul>
+        <li>Design and commit to a sustainable weekly writing schedule.</li>
+        <li>Differentiate between "showing" (conveying information through sensory detail and action) and "telling" (conveying information through exposition and summary).</li>
+        <li>Analyze the difference between active and passive voice and convert passive sentences to their more vigorous active forms.</li>
+        <li>Produce a 1,000-word descriptive scene that utilizes concrete sensory details and the active voice to create an immersive experience for the reader.</li>
+      </ul>
+      <h2>2. Written Lecture</h2>
+      <h3>The Myth of the Muse</h3>
+      <p>Let's begin by dismantling the most destructive myth in the creative arts: the myth of the muse. This is the romantic notion of the writer as a vessel for divine inspiration, waiting patiently for a lightning bolt of genius to strike. When it does, the story pours out, fully formed and perfect. This is a fantasy. Waiting for the muse is an excuse for not writing.</p>
+      <!-- ... Full lesson content would continue here ... -->
     `,
   },
   {
@@ -59,158 +63,84 @@ const lessons: Lesson[] = [
   // Add other lesson objects here...
 ];
 
-
-// Helper function to group lessons by year and semester
-const groupLessonsBySemester = (lessons: Lesson[]) => {
-  return lessons.reduce<Record<string, Record<string, Lesson[]>>>((acc, lesson) => {
-    const yearTitle = `Year ${lesson.year}`;
-    const semesterTitle = `Semester ${lesson.semester}`;
-    if (!acc[yearTitle]) {
-      acc[yearTitle] = {};
-    }
-    if (!acc[yearTitle][semesterTitle]) {
-      acc[yearTitle][semesterTitle] = [];
-    }
-    acc[yearTitle][semesterTitle].push(lesson);
-    return acc;
-  }, {});
-};
-
-const curriculum = groupLessonsBySemester(lessons);
-const yearTitles: Record<number, string> = { 1: "Foundations & Portfolio Building", 2: "Advanced Craft & Professional Development" };
-const semesterTitles: Record<number, string> = { 1: "Craft Fundamentals", 2: "Genre Focus & Experimentation", 3: "Advanced Topics & Thesis Development", 4: "Thesis Completion & Professional Prep"};
-
-interface AccordionProps {
-  yearTitle: string;
-  semesterTitle: string;
-  lessons: Lesson[];
+// This function tells Next.js which lesson pages to build.
+export async function generateStaticParams() {
+  return lessons.map((lesson) => ({
+    slug: lesson.slug,
+  }));
 }
 
-// A component to render a collapsible section for each semester.
-function AccordionSection({ yearTitle, semesterTitle, lessons }: AccordionProps) {
-  const [isOpen, setIsOpen] = useState(false);
+// Sidebar component
+function LessonSidebar({ currentSlug }: { currentSlug: string }) {
+  const semester1Lessons = lessons.filter(l => l.semester === 1);
+
   return (
-    <div className="border border-gray-200 dark:border-gray-800 rounded-lg">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left p-4 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glow"
-        aria-expanded={isOpen}
-      >
+    <aside className="w-full lg:w-1/4 lg:sticky top-28 self-start">
+      <h2 className="font-bold font-display text-lg mb-4">Course Navigation</h2>
+      <nav className="space-y-1">
         <div>
-          <h3 className="font-bold font-display text-lg text-ink dark:text-canvas">{yearTitle}</h3>
-          <p className="text-sm text-ink/80 dark:text-canvas/80">{semesterTitle}</p>
-        </div>
-        <ChevronDown className={`w-5 h-5 transform transition-transform ${isOpen ? "rotate-180" : ""}`} />
-      </button>
-      <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[1000px]" : "max-h-0"}`}>
-        <div className="p-4">
-          <ul className="space-y-3">
-            {lessons.map((lesson) => (
-              <li key={lesson.slug}>
-                <a
-                  href={`/lessons/${lesson.slug}`}
-                  className="flex items-start space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glow rounded-md"
-                >
-                  <span className="font-bold text-ink/60 dark:text-canvas/60 w-8 text-right pt-px">{lesson.week}.</span>
-                  <span>{lesson.title.split(": ")[1]}</span>
-                </a>
-              </li>
-            ))}
+          <h3 className="font-bold font-display text-md py-2">Semester 1: Craft Fundamentals</h3>
+          <ul className="space-y-1 pt-2 pb-2 border-l border-gray-200 dark:border-gray-800">
+            {semester1Lessons.map((lesson) => {
+              const isActive = lesson.slug === currentSlug;
+              return (
+                <li key={lesson.slug}>
+                  <a
+                    href={`/lessons/${lesson.slug}`}
+                    className={`block border-l-2 pl-4 py-1 text-sm transition-colors rounded-r-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glow ${
+                      isActive
+                        ? "border-glow text-ink dark:text-canvas font-bold"
+                        : "border-transparent text-ink/80 dark:text-canvas/80 hover:border-glow hover:text-ink dark:hover:text-canvas"
+                    }`}
+                  >
+                    Lesson {lesson.week}: {lesson.title.split(": ")[1]}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
-      </div>
-    </div>
+      </nav>
+    </aside>
   );
 }
 
-export default function DiyMfaPage() {
+// The page component for a single lesson.
+// Added a default value for params to prevent runtime errors in preview environments.
+export default function LessonPage({ params = { slug: "writers-pact" } }: { params?: { slug: string } }) {
+  const lesson = lessons.find((p) => p.slug === params.slug);
+  if (!lesson) {
+    // Gracefully handle case where lesson is not found
+    return (
+        <div className="container mx-auto px-4 py-12 md:py-16">
+            <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl">Lesson Not Found</h1>
+            <p className="mt-4 text-lg">Sorry, we couldn't find the lesson you were looking for.</p>
+        </div>
+    );
+  }
   return (
     <div className="container mx-auto px-4 py-12 md:py-16">
-      <div className="max-w-4xl mx-auto">
-        <section className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl lg:text-6xl">The DIY MFA in Writing</h1>
-          <div className="mt-6 max-w-3xl mx-auto space-y-4 font-body text-lg leading-relaxed text-ink/90 dark:text-canvas/90">
-            <p>
-              You are here because the work itself is the point. You understand that a writing career is not a passive endeavor but an active
-              craft—one that must be built. This program is designed for the self-motivated writer who seeks the rigor and structure of a Master of Fine
-              Arts program without the demanding, expensive, and often inaccessible institutional framework.
-            </p>
-          </div>
-        </section>
-
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold font-display text-center mb-8">Our Guiding Principles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-body text-ink/80 dark:text-canvas/80">
-            <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
-              <h3 className="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Craft Before Commerce</h3>
-              <p>
-                The habits of a professional writer—querying, platform-building, and audience engagement—are vital, but they are secondary. This
-                program helps you write with power, precision, and originality.
-              </p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
-              <h3 className="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Active, Not Passive</h3>
-              <p>
-                This program is designed for immense self-direction. The program provides the guardrails; you provide the engine. The work is about the
-                writing itself. The lessons, deadlines, and assessments are the scaffolding that allows you to build your own unique body of work.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold font-display text-center mb-8">Program Structure: A Two‑Year Journey</h2>
-           <div className="space-y-6 font-body text-ink/80 dark:text-canvas/80">
-             <div>
-               <h3 className="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">
-                 Semester 1: Craft Fundamentals &amp; Portfolio Building
-               </h3>
-               <p>
-                 We begin with the essentials. You will establish a durable writing practice and begin a deep dive into the foundational elements of
-                 narrative craft. This semester is about building a strong foundation for your future work.
-               </p>
-             </div>
-             <div>
-               <h3 className="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 2: Genre Focus &amp; Experimentation</h3>
-               <p>
-                 With the fundamentals in place, you will begin to explore genre and reader expectations. Through a series of focused deep dives and
-                 lessons, you will experiment with advanced craft techniques and begin developing the extended work that will become your thesis.
-               </p>
-             </div>
-             <div>
-               <h3 className="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 3: Advanced Topics &amp; Thesis Development</h3>
-               <p>
-                 This semester is dedicated to your thesis—the novel‑length manuscript at the core of this program. You will gain a clear understanding
-                 of the publishing landscape while formally outlining and beginning to draft your thesis manuscript.
-               </p>
-             </div>
-             <div>
-               <h3 className="font-bold font-display text-xl mb-2 text-ink dark:text-canvas">Semester 4: Thesis Completion &amp; Professional Preparation</h3>
-               <p>
-                 The final semester is focused on a single outcome: a completed, deeply revised thesis. Alongside this intensive work, you will prepare
-                 for a professional writing life by mastering the query letter, synopsis, and other essential submission materials.
-               </p>
-             </div>
-           </div>
-        </section>
-
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold font-display text-center mb-8">Course Offerings</h2>
-          <div className="space-y-4">
-            {Object.entries(curriculum).map(([year, yearData]) =>
-              Object.entries(yearData).map(([semester, lessons]) => (
-                <AccordionSection
-                  key={`${year}-${semester}`}
-                  yearTitle={`${year}: ${yearTitles[parseInt(year.split(' ')[1])]}`}
-                  semesterTitle={`${semester}: ${semesterTitles[parseInt(semester.split(' ')[1])]}`}
-                  lessons={lessons}
-                />
-              ))
-            )}
-          </div>
-        </section>
+      <div className="flex flex-col lg:flex-row gap-12">
+        <LessonSidebar currentSlug={params.slug} />
+        <div className="w-full lg:w-3/4">
+          <header className="mb-10 pb-6 border-b border-gray-200 dark:border-gray-800">
+            <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl">{lesson.title}</h1>
+              <div className="mt-4 text-sm text-ink/70 dark:text-canvas/70 space-y-1">
+                <p><strong>Program:</strong> {lesson.meta.program}</p>
+                <p><strong>Position:</strong> {lesson.meta.position}</p>
+                <p><strong>Estimated Time Commitment:</strong> {lesson.meta.time}</p>
+                <p><strong>Prerequisites:</strong> {lesson.meta.prerequisites}</p>
+              </div>
+          </header>
+          <article
+            className="prose prose-lg dark:prose-invert max-w-none font-body"
+            dangerouslySetInnerHTML={{ __html: lesson.content }}
+          />
+        </div>
       </div>
     </div>
   );
 }
+
+
 
