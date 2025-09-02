@@ -1,27 +1,30 @@
-"use client";
+"use client"; // This page has interactive accordions.
 
 import { useState } from "react";
-// import Link from "next/link"; // Removed to resolve compilation error
+// import Link from "next/link"; // Removed to fix compilation error in preview environment
 import { ChevronDown } from "lucide-react";
-// import { lessons, Lesson } from "@/lib/lessons"; // Removed to resolve compilation error
+// import { lessons, Lesson } from "@/lib/lessons"; // Removed to fix compilation error in preview environment
 
 // --- Data Duplication for Preview Environment ---
 // To resolve persistent import errors, the lesson data is temporarily duplicated here.
 // In a standard Next.js project, you would import this from a central 'lib/lessons.ts' file.
-export interface Lesson {
+interface Lesson {
   slug: string;
   title: string;
   year: number;
   semester: number;
   week: number;
+  content: string;
 }
-export const lessons: Lesson[] = [
-  {
+
+const lessons: Lesson[] = [
+    {
     slug: "writers-pact",
     title: "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
     year: 1,
     semester: 1,
     week: 1,
+    content: "...",
   },
   {
     slug: "engine-of-story",
@@ -29,11 +32,13 @@ export const lessons: Lesson[] = [
     year: 1,
     semester: 1,
     week: 2,
+    content: "...",
   },
 ];
 // --- End Data Duplication ---
 
 
+// Helper function to group lessons by year and semester
 const groupLessonsBySemester = (lessons: Lesson[]) => {
   return lessons.reduce<Record<string, Record<string, Lesson[]>>>((acc, lesson) => {
     const yearTitle = `Year ${lesson.year}`;
@@ -72,7 +77,6 @@ function AccordionSection({ year, semester, lessons }: { year: string; semester:
           <ul className="space-y-3">
             {lessons.map((lesson) => (
               <li key={lesson.slug}>
-                {/* Replaced Link with standard <a> tag to fix compilation error */}
                 <a href={`/lessons/${lesson.slug}`} className="flex items-start space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow">
                   <span className="font-bold text-ink/60 dark:text-canvas/60 w-8 text-right pt-px">{lesson.week}.</span>
                   <span>{lesson.title.split(": ")[1]}</span>
