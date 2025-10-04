@@ -1,5 +1,4 @@
 "use client"; // This page has interactive accordions.
-
 import { useState } from "react";
 // import Link from "next/link"; // Removed to fix compilation error in preview environment
 import { ChevronDown } from "lucide-react";
@@ -8,6 +7,7 @@ import { ChevronDown } from "lucide-react";
 // --- Data Duplication for Preview Environment ---
 // To resolve persistent import errors, the lesson data is temporarily duplicated here.
 // In a standard Next.js project, you would import this from a central 'lib/lessons.ts' file.
+
 interface Lesson {
   slug: string;
   title: string;
@@ -19,15 +19,15 @@ interface Lesson {
 
 const lessons: Lesson[] = [
     {
-    slug: "writers-pact",
-    title: "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
+    slug: "finding-your-voice",
+    title: "Lesson 1: Finding Your Unique Voice",
     year: 1,
     semester: 1,
     week: 1,
     content: "...",
   },
   {
-    slug: "engine-of-story",
+    slug: "the-engine-of-story",
     title: "Lesson 2: The Engine of Story: Goal, Motivation, and Conflict",
     year: 1,
     semester: 1,
@@ -35,8 +35,8 @@ const lessons: Lesson[] = [
     content: "...",
   },
 ];
-// --- End Data Duplication ---
 
+// --- End Data Duplication ---
 
 // Helper function to group lessons by year and semester
 const groupLessonsBySemester = (lessons: Lesson[]) => {
@@ -51,6 +51,7 @@ const groupLessonsBySemester = (lessons: Lesson[]) => {
 };
 
 const curriculum = groupLessonsBySemester(lessons);
+
 const yearHeadings: Record<number, string> = { 1: "Foundations & Portfolio Building", 2: "Advanced Craft & Professional Development" };
 const semesterHeadings: Record<number, string> = { 1: "Craft Fundamentals", 2: "Genre Focus & Experimentation", 3: "Advanced Topics & Thesis Development", 4: "Thesis Completion & Professional Prep"};
 
@@ -111,4 +112,3 @@ export default function DiyMfaPage() {
     </div>
   );
 }
-
