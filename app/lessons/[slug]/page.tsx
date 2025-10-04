@@ -1,134 +1,91 @@
-// import Link from "next/link"; // Removed to fix compilation error in preview environment
-// import { notFound } from "next/navigation"; // Removed to fix compilation error in preview environment
-// import { lessons } from "@/lib/lessons"; // Removed to fix compilation error in preview environment
+import { notFound } from 'next/navigation';
+import { getLessonBySlug, getAllLessons } from '@/lib/lessons-data';
+import type { Metadata } from 'next';
+import { Bookmark, Clock, GraduationCap } from 'lucide-react';
 
-// --- Data Duplication for Preview Environment ---
-// To resolve persistent import errors, the lesson data is temporarily duplicated here.
-// In a standard Next.js project, you would import this from a central 'lib/lessons.ts' file.
-const lessons = [
-    {
-    slug: "writers-pact",
-    title: "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
-    year: 1,
-    semester: 1,
-    week: 1,
-    meta: {
-      program: "The Writer's Apprenticeship: A Two-Year, Self-Paced MFA",
-      position: "Year 1, Semester 1, Week 1",
-      time: "3-4 hours",
-      prerequisites: "None",
-    },
-    content: `
-      <h2>1. Learning Objectives</h2>
-      <p>By the end of this lesson, you will be able to:</p>
-      <ul>
-        <li>Design and commit to a sustainable weekly writing schedule.</li>
-        <li>Differentiate between "showing" and "telling".</li>
-        <li>Analyze the difference between active and passive voice.</li>
-        <li>Produce a 1,000-word descriptive scene.</li>
-      </ul>
-      <h2>2. Written Lecture</h2>
-      <h3>The Myth of the Muse</h3>
-      <p>Let's begin by dismantling the most destructive myth in the creative arts: the myth of the muse...</p>
-    `,
-  },
-  {
-    slug: "engine-of-story",
-    title: "Lesson 2: The Engine of Story: Goal, Motivation, and Conflict",
-    year: 1,
-    semester: 1,
-    week: 2,
-    meta: {
-      program: "The Writer's Apprenticeship",
-      position: "Year 1, Semester 1, Week 2",
-      time: "3-4 hours",
-      prerequisites: "Lesson 1",
-    },
-    content: "Content for this lesson is coming soon...",
-  },
-];
-// --- End Data Duplication ---
-
-// This function is for Next.js builds and may not work in all preview environments.
-// export async function generateStaticParams() {
-//   return lessons.map((lesson) => ({
-//     slug: lesson.slug,
-//   }));
-// }
-
-// Sidebar component
-function LessonSidebar({ currentSlug }: { currentSlug: string }) {
-  const semester1Lessons = lessons.filter(l => l.semester === 1);
-
-  return (
-    <aside className="w-full lg:w-1/4 lg:sticky top-28 self-start">
-      <h2 className="font-bold font-display text-lg mb-4">Course Navigation</h2>
-      <nav className="space-y-1">
-        <div>
-          <h3 className="font-bold font-display text-md py-2">Semester 1: Craft Fundamentals</h3>
-          <ul className="space-y-1 pt-2 pb-2 border-l border-gray-200 dark:border-gray-800">
-            {semester1Lessons.map((lesson) => {
-              const isActive = lesson.slug === currentSlug;
-              return (
-                <li key={lesson.slug}>
-                  <a
-                    href={`/lessons/${lesson.slug}`}
-                    className={`block border-l-2 pl-4 py-1 text-sm transition-colors rounded-r-md ${
-                      isActive
-                        ? "border-glow text-ink dark:text-canvas font-bold"
-                        : "border-transparent text-ink/80 dark:text-canvas/80 hover:border-glow hover:text-ink dark:hover:text-canvas"
-                    }`}
-                  >
-                    Lesson {lesson.week}: {lesson.title.split(": ")[1]}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </nav>
-    </aside>
-  );
+// --- This function generates the necessary metadata for the page ---
+// It dynamically creates the title and description based on the lesson slug.
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const lesson = getLessonBySlug(params.slug);
+  if (!lesson) {
+    return {
+      title: 'Lesson Not Found',
+      description: 'The requested lesson could not be found.',
+    };
+  }
+  return {
+    title: `${lesson.title} | AI Writers Retreat`,
+    description: `A lesson on ${lesson.title} from the ${lesson.module} module.`,
+  };
 }
 
-// Main page component. This is the only default export.
-export default function LessonPage({ params }: { params?: { slug: string } }) {
-  // Default to the first lesson if params are not available in the preview environment
-  const slug = params?.slug || 'writers-pact';
-  const lesson = lessons.find((p) => p.slug === slug);
+// --- This function tells Next.js which lesson pages to build statically ---
+// It fetches all lesson slugs so they can be pre-rendered.
+export async function generateStaticParams() {
+  const lessons = getAllLessons();
+  return lessons.map((lesson) => ({
+    slug: lesson.slug,
+  }));
+}
 
+
+// --- This is the main Page Component (the required default export) ---
+// It receives `params` containing the current URL's slug.
+export default function LessonPage({ params }: { params: { slug: string } }) {
+  const lesson = getLessonBySlug(params.slug);
+
+  // If no lesson is found for the given slug, render a 404 page.
   if (!lesson) {
-    // Return a simple message if the lesson isn't found
-    return <div className="p-8">Lesson not found.</div>;
+    notFound();
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-16">
-      <div className="flex flex-col lg:flex-row gap-12">
-        <LessonSidebar currentSlug={slug} />
-        <div className="w-full lg:w-3/4">
-          <header className="mb-10 pb-6 border-b border-gray-200 dark:border-gray-800">
-            <h1 className="text-4xl font-extrabold tracking-tight font-display md:text-5xl">{lesson.title}</h1>
-            {lesson.meta && (
-              <div className="mt-4 text-sm text-ink/70 dark:text-canvas/70 space-y-1">
-                <p><strong>Program:</strong> {lesson.meta.program}</p>
-                <p><strong>Position:</strong> {lesson.meta.position}</p>
-                <p><strong>Estimated Time Commitment:</strong> {lesson.meta.time}</p>
-                <p><strong>Prerequisites:</strong> {lesson.meta.prerequisites}</p>
+    <main className="bg-canvas dark:bg-canvasDark text-ink dark:text-canvas min-h-screen font-body">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
+        <article className="prose prose-lg dark:prose-invert prose-headings:font-display prose-a:text-glow dark:prose-a:text-mint hover:prose-a:underline">
+          
+          {/* A11Y: The <header> provides a landmark for the main content's introduction. */}
+          <header className="mb-8 border-b pb-4 border-gray-200 dark:border-gray-700">
+            <p className="text-sm font-ui uppercase tracking-wider text-glow dark:text-mint flex items-center">
+              <GraduationCap className="w-4 h-4 mr-2" />
+              {lesson.module}
+            </p>
+            <h1 className="mt-2 text-4xl md:text-5xl font-bold font-display text-ink dark:text-canvas">
+              {lesson.title}
+            </h1>
+            <div className="mt-4 flex items-center space-x-4 text-sm font-ui text-gray-500 dark:text-gray-400">
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-1.5" />
+                <span>{lesson.readingTime} min read</span>
               </div>
-            )}
+              <button
+                aria-label="Bookmark this lesson"
+                className="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-glow dark:focus-visible:ring-offset-canvasDark"
+              >
+                <Bookmark className="w-4 h-4" />
+              </button>
+            </div>
           </header>
-          <article
-            className="prose prose-lg dark:prose-invert max-w-none font-body"
-            dangerouslySetInnerHTML={{ __html: lesson.content }}
-          />
-        </div>
+
+          {/* Render video if available */}
+          {lesson.videoUrl && (
+            <div className="my-8 aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-lg">
+              <iframe
+                src={lesson.videoUrl}
+                title={`Video for ${lesson.title}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
+            </div>
+          )}
+
+          {/* A11Y: The main lesson content is within the <article> tag for semantic meaning. */}
+          <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
+
+        </article>
       </div>
-    </div>
+    </main>
   );
 }
-
-
-
-
-
