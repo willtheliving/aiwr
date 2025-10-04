@@ -1,12 +1,4 @@
-// Define the Lesson type interface
-export interface Lesson {
-  slug: string;
-  title: string;
-  module: string;
-  readingTime: number;
-  videoUrl?: string;
-  content: string;
-}
+import type { Lesson } from './types';
 
 // This is our mock database of lessons.
 // The named export here is NOT in a page file, so it's perfectly valid.
