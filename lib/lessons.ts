@@ -15,8 +15,8 @@ export interface Lesson {
 
 export const lessons: Lesson[] = [
   {
-    slug: "writers-pact",
-    title: "Lesson 1: The Writer's Pact: Building a Sustainable Routine & Mastering Basic Craft",
+    slug: "finding-your-voice",
+    title: "Lesson 1: Finding Your Unique Voice",
     year: 1,
     semester: 1,
     week: 1,
@@ -27,22 +27,23 @@ export const lessons: Lesson[] = [
       prerequisites: "None",
     },
     content: `
-      <h2>1. Learning Objectives</h2>
-      <p>By the end of this lesson, you will be able to:</p>
+      1. Learning Objectives
+      By the end of this lesson, you will be able to:
       <ul>
-        <li>Design and commit to a sustainable weekly writing schedule.</li>
-        <li>Differentiate between "showing" and "telling".</li>
-        <li>Analyze the difference between active and passive voice.</li>
-        <li>Produce a 1,000-word descriptive scene.</li>
+        Design and commit to a sustainable weekly writing schedule.
+        Differentiate between "showing" and "telling".
+        Analyze the difference between active and passive voice.
+        Produce a 1,000-word descriptive scene.
       </ul>
-      <h2>2. Written Lecture</h2>
-      <h3>The Myth of the Muse</h3>
-      <p>Let's begin by dismantling the most destructive myth in the creative arts: the myth of the muse...</p>
+
+      2. Written Lecture
+      The Myth of the Muse
+      Let's begin by dismantling the most destructive myth in the creative arts: the myth of the muse...
       <!-- Full lesson content goes here -->
     `,
   },
   {
-    slug: "engine-of-story",
+    slug: "the-engine-of-story",
     title: "Lesson 2: The Engine of Story: Goal, Motivation, and Conflict",
     year: 1,
     semester: 1,
@@ -56,4 +57,3 @@ export const lessons: Lesson[] = [
     content: "Content for this lesson is coming soon...",
   },
 ];
-
