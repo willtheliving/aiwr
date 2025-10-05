@@ -15,35 +15,31 @@ export interface Lesson {
 
 export const lessons: Lesson[] = [
   {
-    slug: "finding-your-voice",
-    title: "Lesson 1: Finding Your Unique Voice",
+    slug: "lesson-1",
+    title: "Lesson 1: The Writer's Pact",
     year: 1,
     semester: 1,
     week: 1,
     meta: {
       program: "The Writer's Apprenticeship: A Two-Year, Self-Paced MFA",
       position: "Year 1, Semester 1, Week 1",
-      time: "3-4 hours",
+      time: "2-3 hours",
       prerequisites: "None",
     },
     content: `
       1. Learning Objectives
       By the end of this lesson, you will be able to:
       <ul>
-        Design and commit to a sustainable weekly writing schedule.
-        Differentiate between "showing" and "telling".
-        Analyze the difference between active and passive voice.
-        Produce a 1,000-word descriptive scene.
+        <li>Articulate the difference between a writing hobby and a writing practice.</li>
+        <li>Design a personalized and sustainable weekly writing schedule.</li>
+        <li>Identify your primary obstacles to consistent writing and develop strategies to overcome them.</li>
+        <li>Draft a personal "Writer's Pact" to serve as a mission statement for your writing journey.</li>
       </ul>
-
-      2. Written Lecture
-      The Myth of the Muse
-      Let's begin by dismantling the most destructive myth in the creative arts: the myth of the muse...
-      <!-- Full lesson content goes here -->
+      <!-- Full lesson content -->
     `,
   },
   {
-    slug: "the-engine-of-story",
+    slug: "lesson-2",
     title: "Lesson 2: The Engine of Story: Goal, Motivation, and Conflict",
     year: 1,
     semester: 1,
