@@ -1,42 +1,8 @@
 "use client"; // This page has interactive accordions.
 import { useState } from "react";
-// import Link from "next/link"; // Removed to fix compilation error in preview environment
+import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-// import { lessons, Lesson } from "@/lib/lessons"; // Removed to fix compilation error in preview environment
-
-// --- Data Duplication for Preview Environment ---
-// To resolve persistent import errors, the lesson data is temporarily duplicated here.
-// In a standard Next.js project, you would import this from a central 'lib/lessons.ts' file.
-
-interface Lesson {
-  slug: string;
-  title: string;
-  year: number;
-  semester: number;
-  week: number;
-  content: string;
-}
-
-const lessons: Lesson[] = [
-    {
-    slug: "finding-your-voice",
-    title: "Lesson 1: Finding Your Unique Voice",
-    year: 1,
-    semester: 1,
-    week: 1,
-    content: "...",
-  },
-  {
-    slug: "the-engine-of-story",
-    title: "Lesson 2: The Engine of Story: Goal, Motivation, and Conflict",
-    year: 1,
-    semester: 1,
-    week: 2,
-    content: "...",
-  },
-];
-
-// --- End Data Duplication ---
+import { lessons, Lesson } from "@/lib/lessons";
 
 // Helper function to group lessons by year and semester
 const groupLessonsBySemester = (lessons: Lesson[]) => {
@@ -71,17 +37,17 @@ function AccordionSection({ year, semester, lessons }: { year: string; semester:
           <h3 className="font-bold font-display text-lg">{`${year}: ${yearHeadings[yearNum]}`}</h3>
           <p className="text-sm text-ink/80 dark:text-canvas/80">{`${semester}: ${semesterHeadings[semesterNum]}`}</p>
         </div>
-        <ChevronDown className={`w-5 h-5 transform transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown className={`w-5 h-5 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
-      <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[1000px]" : "max-h-0"}`}>
+      <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
         <div className="p-4">
           <ul className="space-y-3">
             {lessons.map((lesson) => (
               <li key={lesson.slug}>
-                <a href={`/lessons/${lesson.slug}`} className="flex items-start space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow">
+                <Link className="flex items-start space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow" href={`/lessons/${lesson.slug}`}>
                   <span className="font-bold text-ink/60 dark:text-canvas/60 w-8 text-right pt-px">{lesson.week}.</span>
-                  <span>{lesson.title.split(": ")[1]}</span>
-                </a>
+                  {lesson.title.split(": ")[1]}
+                </Link>
               </li>
             ))}
           </ul>
