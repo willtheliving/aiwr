@@ -1,0 +1,73 @@
+# robots.txt for aiwritersretreat.com
+# Purpose: AI-friendly—broadly allow crawling, block only obvious system areas.
+
+# ------------------------------
+# Global defaults
+# ------------------------------
+User-agent: *
+Disallow:
+Disallow: /admin/
+Disallow: /login/
+Disallow: /cgi-bin/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /search
+Disallow: /?s=
+Crawl-delay: 5
+
+# ------------------------------
+# AI / research crawlers (explicit allow for clarity)
+# ------------------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ------------------------------
+# Major search engines (explicit allow)
+# ------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+# ------------------------------
+# Sitemaps
+# ------------------------------
+Sitemap: https://aiwritersretreat.com/sitemap.xml
+Sitemap: https://www.aiwritersretreat.com/sitemap.xml

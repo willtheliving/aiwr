@@ -38,15 +38,15 @@ export default function AboutPage() {
             </p>
             <p>
               When generative AI appeared, I was fascinated. I spent thousands of hours experimenting, not just as a writer, but as a librarian—learning the system,
-              understanding its structure, and figuring out how to query it for the best possible results. I realized that the secret to using AI wasn't just about
+              understanding its structure, and figuring out how to query it for the best possible results. I realized that the secret to using AI wasn’t just about
               the right prompt; it was about understanding how to have a structured, intentional conversation.
             </p>
             <blockquote className="border-l-4 border-glow pl-6 italic text-ink/80 dark:text-canvas/80">
-              I built the AI Writers' Retreat to be the resource I wished I had. It's a place to merge the art of storytelling with the science of these new tools.
+              I built the AI Writers’ Retreat to be the resource I wished I had. It’s a place to merge the art of storytelling with the science of these new tools.
               My mission is to give other writers the frameworks and confidence to use AI to support their endeavors, not replace their voice.
             </blockquote>
             <p>
-              The resources here are free, but if you'd like to support this project, you can{' '}
+              The resources here are free, but if you’d like to support this project, you can{' '}
               <a
                 href="https://coff.ee/aiwritersretreat"
                 target="_blank"
@@ -65,7 +65,7 @@ export default function AboutPage() {
           <div className="max-w-3xl mx-auto font-body space-y-4 text-ink/80 dark:text-canvas/80 text-base">
             <p>
               <strong className="text-ink dark:text-canvas">All opinions expressed on this website are my own.</strong> The resources, tools, and methods recommended here
-              are based solely on their merit and their value to a writer's process. This project is not currently sponsored by any entity, nor does it use
+              are based solely on their merit and their value to a writer’s process. This project is not currently sponsored by any entity, nor does it use
               affiliate links. Should that change in the future, any sponsored or affiliated content will be clearly and conspicuously marked.
             </p>
             <p>

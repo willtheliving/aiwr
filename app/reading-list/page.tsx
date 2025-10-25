@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"; // This page is highly interactive (filters, modals).
 
 import { useState, useEffect } from "react";
@@ -502,7 +503,7 @@ export default function ReadingListPage() {
         <div className="mt-6 max-w-3xl mx-auto space-y-4 font-body text-ink/80 dark:text-canvas/80 leading-relaxed">
           <p>
             Pursuing a Master of Fine Arts in writing is more than an academic
-            path; it's an intensive journey demanding both technical mastery and
+            path; it’s an intensive journey demanding both technical mastery and
             a refined artistic vision. To navigate this challenging pursuit,
             certain books stand as indispensable guides.
           </p>

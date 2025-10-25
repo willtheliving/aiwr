@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-xs text-ink/60 dark:text-canvas/60">
-          <p>&copy; {new Date().getFullYear()} AI Writers' Retreat. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} AI Writers’ Retreat. All Rights Reserved.</p>
           <p className="mt-1">This is an independent project. The content and tools on this site are for your personal learning and use.</p>
         </div>
       </div>
