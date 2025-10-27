@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/ai-basics", label: "AI Basics" },
   { href: "/diy-mfa", label: "DIY MFA" },
   { href: "/reading-list", label: "Reading List" },
+  { href: "/resources", label: "Resources" },
   // { href: "/community", label: "Community" }, // Example for later
 ];
 
