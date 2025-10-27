@@ -6,7 +6,7 @@ const lesson = {
   "title": "Lesson 10: The Art of Revision I: Macro-Edits and Re-Visioning",
   "module": "Year 1 · Semester 1 · Craft Fundamentals",
   "position": "Year 1, Semester 1, Week 10",
-  "estimatedTime": "3-4 hours",
+  "estimatedTime": "4-5 hours",
   "prerequisites": "Lessons 1–9",
   "description": "This placeholder marks the upcoming deep dive on The Art of Revision I: Macro-Edits and Re-Visioning. The full lesson will include lecture content, readings, and studio work aligned with the DIY MFA roadmap."
 } as const;
