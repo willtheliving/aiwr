@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { getAllLessons } from '@/lib/lessons-data';
+import { lessons as diyMfaLessons } from '@/lib/lessons';
 
 const BASE_URL = 'https://aiwritersretreat.com';
 
@@ -18,20 +19,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/lessons/lesson-6',
   ];
 
-  const lessonLibraryRoutes = getAllLessons().map((lesson) => ({
-    url: `${BASE_URL}/lessons/${lesson.slug}`,
-    lastModified: updatedAt,
-  }));
+  const lessonRoutes = new Map<string, MetadataRoute.Sitemap[number]>();
+
+  standaloneLessonRoutes.forEach((path) => {
+    const url = `${BASE_URL}${path}`;
+    lessonRoutes.set(url, { url, lastModified: updatedAt });
+  });
+
+  getAllLessons().forEach((lesson) => {
+    const url = `${BASE_URL}/lessons/${lesson.slug}`;
+    lessonRoutes.set(url, { url, lastModified: updatedAt });
+  });
+
+  diyMfaLessons.forEach((lesson) => {
+    const url = `${BASE_URL}/lessons/${lesson.slug}`;
+    lessonRoutes.set(url, { url, lastModified: updatedAt });
+  });
 
   return [
     ...staticRoutes.map((path) => ({
       url: `${BASE_URL}${path === '/' ? '' : path}`,
       lastModified: updatedAt,
     })),
-    ...standaloneLessonRoutes.map((path) => ({
-      url: `${BASE_URL}${path}`,
-      lastModified: updatedAt,
-    })),
-    ...lessonLibraryRoutes,
+    ...lessonRoutes.values(),
   ];
 }
