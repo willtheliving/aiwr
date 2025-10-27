@@ -41,6 +41,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}${path === '/' ? '' : path}`,
       lastModified: updatedAt,
     })),
-    ...lessonRoutes.values(),
+    ...Array.from(lessonRoutes.values()),
   ];
 }
