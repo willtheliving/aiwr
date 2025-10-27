@@ -71,8 +71,8 @@ export const lessons: Lesson[] = [
     content: "Full lesson content available in /lessons/lesson-4",
   },
   {
-    slug: "lesson-5",
-    title: "Lesson 5: Dialogue and Subtext",
+    slug: "weaving-the-fabric",
+    title: "Lesson 5: Weaving the Fabric: Transitions, Subplots, and Narrative Momentum",
     year: 1,
     semester: 1,
     week: 5,
@@ -82,7 +82,7 @@ export const lessons: Lesson[] = [
       time: "3-4 hours",
       prerequisites: "Lesson 1-4",
     },
-    content: "Full lesson content available in /lessons/lesson-5",
+    content: "Full lesson content available in /lessons/weaving-the-fabric",
   },
   {
     slug: "lesson-6",

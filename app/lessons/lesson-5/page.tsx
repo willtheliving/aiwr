@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation';
+
 export default function Lesson5Page() {
-  return <div>Lesson 5 content coming soon!</div>
+  redirect('/lessons/weaving-the-fabric');
 }
