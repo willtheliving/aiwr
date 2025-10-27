@@ -26,6 +26,8 @@ function AccordionSection({ year, semester, lessons }: { year: string; semester:
   const yearNum = parseInt(year.split(' ')[1]);
   const semesterNum = parseInt(semester.split(' ')[1]);
 
+  const sortedLessons = [...lessons].sort((a, b) => a.lessonNumber - b.lessonNumber);
+
   return (
     <div className="border border-gray-200 dark:border-gray-800 rounded-lg">
       <button
@@ -42,14 +44,25 @@ function AccordionSection({ year, semester, lessons }: { year: string; semester:
       <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
         <div className="p-4">
           <ul className="space-y-3">
-            {lessons.map((lesson) => (
-              <li key={lesson.slug}>
-                <Link className="flex items-start space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow" href={`/lessons/${lesson.slug}`}>
-                  <span className="font-bold text-ink/60 dark:text-canvas/60 w-8 text-right pt-px">{lesson.week}.</span>
-                  {lesson.title.split(": ")[1]}
+            {sortedLessons.map((lesson) => {
+              const [, ...titleParts] = lesson.title.split(': ');
+              const displayTitle = titleParts.length ? titleParts.join(': ') : lesson.title;
+              const lessonNumberLabel = lesson.lessonNumber ?? lesson.week;
+
+              return (
+                <li key={lesson.slug}>
+                  <Link
+                    className="flex items-start space-x-3 text-ink/80 dark:text-canvas/80 hover:text-glow"
+                    href={`/lessons/${lesson.slug}`}
+                  >
+                    <span className="font-bold text-ink/60 dark:text-canvas/60 w-10 text-right pt-px">
+                      {lessonNumberLabel.toString().padStart(2, '0')}.
+                    </span>
+                    <span className="flex-1">{displayTitle}</span>
                 </Link>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
