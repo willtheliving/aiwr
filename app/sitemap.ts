@@ -8,7 +8,7 @@ const BASE_URL = 'https://aiwritersretreat.com';
 export default function sitemap(): MetadataRoute.Sitemap {
   const updatedAt = new Date();
 
-  const staticRoutes = ['/', '/about', '/reading-list', '/diy-mfa'];
+  const staticRoutes = ['/', '/about', '/reading-list', '/diy-mfa', '/ai-writing-news'];
 
   const standaloneLessonRoutes = [
     '/lessons/lesson-1',

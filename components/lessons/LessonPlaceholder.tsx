@@ -78,7 +78,7 @@ export function LessonPlaceholder({
               <ul className="mt-4 list-disc space-y-2 pl-5 text-ink/80 dark:text-canvas/80">
                 <li>Deep-dive lectures that build on the curriculum milestones preceding this lesson.</li>
                 <li>Curated readings, viewing guides, and optional extension paths to broaden your craft toolkit.</li>
-                <li>Portfolio-centered studio assignments that align with the two-year Writer&rsquo;s Apprenticeship roadmap.</li>
+                <li>Portfolio-centered studio assignments that align with the two-year Writer's Apprenticeship roadmap.</li>
               </ul>
             </section>
           </div>
